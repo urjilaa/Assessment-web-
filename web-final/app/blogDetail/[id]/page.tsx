@@ -1,7 +1,86 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+'useimport React, { useState, useEffect } from 'react';
 
-interface Job {
+const App: React.FC = () => {
+
+  const [job, setJobs] = useState<Job | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
+  const[error, setError] = useState<string | null>(null)
+
+  useEffect (() => {
+    const fetchBlog = async() => {
+      try{
+        const res = await fetch(`https://a2sv-backend.onrender.com/api/members/${_id}`);
+        if (!res.ok){
+          const errorText = await res.text();
+          console.error('Error response:', errorText);
+          setError("An error occurred while fetching the job details.");
+          throw new Error ("Network response was not ok");
+        }
+        const data = await res.json();
+        console.log(data.data)
+        if (data && data.data){
+
+          data.data.responsibilities = data.data.responsibilities.split('\n');
+          setJobs(data.data);
+          console.log(data.data)
+        }
+        else{
+          setError("An error occurred while fetching the job details.");
+          throw new Error("Network response was not ok");
+        }
+      }
+      catch(error){
+        console.log(error);
+        setError("Failed to fetch");
+      }
+      finally{
+        setLoading(false);
+      }
+    };
+ 
+  fetchBlog();
+  }, [_id]);
+
+  if (loading) {
+    return <p>loading...</p>
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>
+  }
+
+  if (!job) {
+    return <p>No job data available</p>
+  }
+
+
+  return (
+    <div className="container mx-auto">
+      <h1 className="text-3xl font-bold">The essential guide to Competitive Programming</h1>
+      {blog && (
+        <div className="mt-4 bg-gray-100 p-4">
+          <h2 className="text-xl font-bold">{blog.name}</h2>
+          <p className="text-lg">{blog.bio}</p>
+          <p className="text-lg">Department: {blog.department}</p>
+          <div className="mt-4">
+            <p>Social Media:</p>
+            <ul className="list-disc list-inside">
+              {Object.entries(blog.socialMedia).map(([key, value]) => (
+                <li key={key}>
+                  <a href={value} className="text-blue-500 underline" target="_blank" rel="noreferrer">{key}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
+
+interface Blog {
   socialMedia: {
     linkedin: string;
     facebook: string;
@@ -12,80 +91,7 @@ interface Job {
   bio: string;
   department: string;
   __v: number;
-  responsibilities: string[];
 }
-
-const App: React.FC<{ _id: string }> = ({ _id }) => {
-  const [job, setJob] = useState<Job | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchJob = async () => {
-      try {
-        const res = await fetch(`https://a2sv-backend.onrender.com/api/members/${_id}`);
-        if (!res.ok) {
-          const errorText = await res.text();
-          console.error('Error response:', errorText);
-          setError("An error occurred while fetching the job details.");
-          throw new Error("Network response was not ok");
-        }
-        const data = await res.json();
-        if (data && data.data) {
-          data.data.responsibilities = data.data.responsibilities.split('\n');
-          setJob(data.data);
-        } else {
-          setError("No job data found.");
-          throw new Error("No job data found.");
-        }
-      } catch (error) {
-        console.error(error);
-        setError("Failed to fetch");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchJob();
-  }, [_id]);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
-  if (!job) {
-    return <p>No job data available</p>;
-  }
-
-  return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-bold">The Essential Guide to Competitive Programming</h1>
-      <div className="mt-4 bg-gray-100 p-4">
-        <h2 className="text-xl font-bold">{job.name}</h2>
-        <p className="text-lg">{job.bio}</p>
-        <p className="text-lg">Department: {job.department}</p>
-        <div className="mt-4">
-          <p>Social Media:</p>
-          <ul className="list-disc list-inside">
-            {Object.entries(job.socialMedia).map(([key, value]) => (
-              <li key={key}>
-                <a href={value} className="text-blue-500 underline" target="_blank" rel="noreferrer">
-                  {key}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default App;
 
 // // app/blogDetail/[id]/page.tsx
 // import Image from 'next/image';

@@ -25,6 +25,9 @@ To use the blog page, you need to provide the _id of the blog you want to displa
 ![Screenshot (119)](https://github.com/user-attachments/assets/ec4c06fa-482e-461d-a54d-f3df8b79433a)
 ## signup page 
 ![Screenshot (118)](https://github.com/user-attachments/assets/6ec91718-e869-4010-9545-7f565a3b9d91)
+## Detail page 
+![Screenshot (124)](https://github.com/user-attachments/assets/ec2290e3-4a11-4c7c-a304-34360f9eb9cd)
+
 tsx
 Copy code
 <App _id="YOUR_BLOG_ID" />

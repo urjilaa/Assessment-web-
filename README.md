@@ -26,7 +26,7 @@ To use the blog page, you need to provide the _id of the blog you want to displa
 ## signup page 
 ![Screenshot (118)](https://github.com/user-attachments/assets/6ec91718-e869-4010-9545-7f565a3b9d91)
 ## Detail page 
-![Screenshot (125)](https://github.com/user-attachments/assets/ce4aa3e8-9abf-4af4-8aae-aa2d42f1a149)
+![Screenshot (127)](https://github.com/user-attachments/assets/88f451be-054e-45c0-afa1-762a9a9d8535)
 ## Main blog page
 ![Screenshot (126)](https://github.com/user-attachments/assets/dcaa2e75-8563-4578-9795-4858db1a5f69)
 
